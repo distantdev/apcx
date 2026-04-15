@@ -1,6 +1,6 @@
 # APCX
 
-APCX is a **VST3 MIDI effect** (step sequencer) made for the **Akai APC Mini MK2**. It pairs that exact 8×8 grid with your DAW: same layout on screen and on the hardware, with **pads and LEDs driven in lockstep** so the MK2 is your real control surface—not an afterthought.
+APCX is a **VST3 MIDI effect** for the **Akai APC Mini MK2** that turns the controller into a **live step sequencer**: build patterns on the pad grid, run the sequence in time with your DAW, and drive software instruments with the plug-in’s MIDI output.
 
 ![APCX plug-in window](docs/screenshot.png)
 
@@ -8,7 +8,7 @@ APCX is a **VST3 MIDI effect** (step sequencer) made for the **Akai APC Mini MK2
 
 ## Download and install
 
-APCX is **Windows-only** for now (Windows 10 or later). It is built for the **Akai APC Mini MK2** on USB—you need that hardware to use it as intended. You also need a DAW that supports **VST3** and can host a **MIDI effect** (or otherwise route MIDI from the plug-in; exact wording depends on your DAW).
+APCX is **Windows-only** for now (Windows 10 or later).
 
 ### What you need
 
@@ -18,7 +18,7 @@ APCX is **Windows-only** for now (Windows 10 or later). It is built for the **Ak
 
 ### Get the latest build
 
-Open the repository **[Releases](releases)** page on GitHub and download the latest **MSI** or **ZIP** for Windows.
+Open the repository **[Releases](https://github.com/distantdev/apcx/releases)** page on GitHub and download the latest **MSI** or **ZIP** for Windows.
 
 ### Option A — MSI installer (recommended)
 
@@ -46,11 +46,11 @@ If the DAW does not list APCX, confirm the **full** `APCX.vst3` bundle was copie
 1. Connect the **APC Mini MK2** over USB before or right after you open the plug-in.  
 2. Insert APCX on a track or slot where your DAW allows **MIDI-generating / MIDI-effect** VST3s, and route its MIDI output to a software instrument (or the next MIDI effect in the chain), following your DAW’s usual rules for MIDI FX.  
 3. Watch the status line at the bottom: it should move from **searching** to **connected** when the APC is found.  
-4. **Top four pad rows (32 pads):** steps in the sequence—use the screen, the MK2 pads, or both; they stay aligned.  
+4. **Top four pad rows (32 pads):** step positions in the live sequencer—tap pads to enable or edit steps.  
 5. **Bottom left 4×4:** note / pitch selection for painting steps.  
 6. **Bottom right 4×4:** velocity selection.  
 
-**Key / scale / octave** controls are under the grid. **Pad colors on the APC** follow the same logic as the UI (current step, notes, velocity, and so on).
+**Key / scale / octave** controls are under the grid. **Pad colors on the APC** show the current step, active notes, and velocity.
 
 **Shift on the hardware:** hold **Shift** on the APC for the on-device scale/key/octave overlay.
 
@@ -73,33 +73,20 @@ These steps match **CMake + Visual Studio 2022**, which is what this repo and **
 JUCE is included as a **git submodule**, so clone with submodules:
 
 ```bash
-git clone --recurse-submodules <repository-url>
-cd <repository-folder>
+git clone --recurse-submodules https://github.com/distantdev/apcx.git
+cd apcx
 ```
 
 If you already cloned without submodules:
 
 ```bash
-cd <repository-folder>
+cd apcx
 git submodule update --init --recursive
-```
-
-### Verify JUCE is a submodule (not a bad copy)
-
-Your repo should record **one** gitlink for `JUCE`, not thousands of tracked files under `JUCE/`.
-
-- After init, `git submodule status` should list `JUCE` with a commit SHA (leading `-` or `+` means out of date vs index—see Git docs).
-- **Sanity check:** `git ls-files -s JUCE` must show **exactly one** line starting with **`160000`** (submodule mode). If you see many paths like `JUCE/CMakeLists.txt` with mode `100644`, JUCE was committed as normal files instead of a submodule—fix that before contributing.
-
-On Windows you can run:
-
-```powershell
-pwsh -File scripts/verify-juce-submodule.ps1
 ```
 
 ### Pinned JUCE version
 
-APCX is built and tested against **JUCE 8.0.12** (Git tag **`8.0.12`** on [juce-framework/JUCE](https://github.com/juce-framework/JUCE)). The submodule pointer in this repo should stay on that tag (or a patch commit you have explicitly validated) so CI and local builds stay reproducible.
+APCX targets **JUCE 8.0.12** (tag **`8.0.12`** on [juce-framework/JUCE](https://github.com/juce-framework/JUCE)). Keep the submodule on that tag unless you bump it and re-check CI and local builds.
 
 To move the submodule to that tag after cloning:
 
@@ -137,10 +124,6 @@ git pull
 git submodule update --init --recursive
 ```
 
-### Optional: Projucer / `.jucer` workflow
-
-You can open **`APCX.jucer`** in Projucer, point global paths at this repo’s **`JUCE/modules`**, export a Visual Studio solution, and build from there. The **supported** path for contributions and CI is **CMake** as above.
-
 ### CI and releases (maintainers)
 
 The workflow **`.github/workflows/build.yml`** runs on:
@@ -155,7 +138,7 @@ It produces **build artifacts**: a **VST3 ZIP** and an **MSI**. For `v*` tags it
 
 ## Contributing
 
-Pull requests are welcome. Please use the **CMake** build, test in a DAW with an **APC Mini MK2** when you can, and describe behavior changes clearly—especially anything that touches MIDI timing or hardware mapping.
+Pull requests are welcome. Use the **CMake** build, test with an **APC Mini MK2** when you can, and note behavior changes—especially MIDI timing or hardware mapping.
 
 ---
 
