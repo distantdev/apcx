@@ -1,0 +1,87 @@
+name: Build Plugin (CMake)
+
+on:
+  push:
+    tags: [ 'v*' ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Windows
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Configure CMake
+        run: cmake -B build -G "Visual Studio 17 2022" -A x64
+
+      - name: Build Plugin
+        run: cmake --build build --config Release --target APCX_VST3
+
+      - name: Package VST3
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory -Force -Path artifacts
+          $vst3Path = "build/APCX_artefacts/Release/VST3/APCX.vst3"
+          Copy-Item -Path $vst3Path -Destination "artifacts\" -Recurse -Force
+          Compress-Archive -Path artifacts\* -DestinationPath APCX-VST3-Windows.zip
+
+      - name: Build MSI Installer
+        shell: pwsh
+        run: |
+          # Always download the binaries (zip) to ensure we have a reliable executable
+          # and know exactly where it is.
+          Write-Host "Downloading WiX 3.11.2 binaries..."
+          Invoke-WebRequest -Uri "https://github.com/wixtoolset/wix3/releases/download/wix3112rtm/wix311-binaries.zip" -OutFile "wix-bin.zip"
+          Expand-Archive -Path "wix-bin.zip" -DestinationPath "wix-bin"
+          $wixPath = "$pwd\wix-bin"
+          
+          cd wix
+          & "$wixPath\candle.exe" Package.wxs -ext WixUIExtension -ext WixUtilExtension
+          & "$wixPath\light.exe" Package.wixobj -ext WixUIExtension -ext WixUtilExtension -out APCX-Setup.msi
+          
+          Copy-Item -Path "APCX-Setup.msi" -Destination "..\APCX-Setup.msi" -Force
+
+      - name: Upload VST3 Zip
+        uses: actions/upload-artifact@v4
+        with:
+          name: APCX-VST3-Windows
+          path: APCX-VST3-Windows.zip
+
+      - name: Upload MSI Installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: APCX-Setup
+          path: APCX-Setup.msi
+
+  # Create GitHub release for tags
+  create-release:
+    needs: [build]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    if: startsWith(github.ref, 'refs/tags/')
+    steps:
+      - name: Download VST3 Zip Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: APCX-VST3-Windows
+          
+      - name: Download MSI Installer Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: APCX-Setup
+          
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            APCX-VST3-Windows.zip
+            APCX-Setup.msi
+          generate_release_notes: true

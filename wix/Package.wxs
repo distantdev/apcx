@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi"
+    xmlns:ui="http://schemas.microsoft.com/wix/UIExtension">
+
+<Product Id="*"
+    Name="APCX"
+    Language="1033"
+    Version="1.0.0"
+    Manufacturer="Distant Nebula"
+    UpgradeCode="{38F8462E-C1A0-4FE7-8864-1738745E8977}">
+
+    <Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" Platform="x64" />
+
+    <MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+    <MediaTemplate EmbedCab="yes" />
+
+    <!-- Icon and properties -->
+    <Icon Id="icon.ico" SourceFile="icon.ico" />
+    <Property Id="ARPPRODUCTICON" Value="icon.ico" />
+    <Property Id="ARPHELPLINK" Value="https://distantnebula.com" />
+    <Property Id="WIXUI_INSTALLDIR" Value="VSTFOLDER" />
+
+    <!-- Define installation directory structure -->
+    <Directory Id="TARGETDIR" Name="SourceDir">
+        <Directory Id="ProgramFiles64Folder">
+            <Directory Id="CommonFiles" Name="Common Files">
+                <Directory Id="VSTFOLDER" Name="VST3">
+                    <Directory Id="PluginFolder" Name="APCX.vst3">
+                        <Directory Id="ContentsFolder" Name="Contents">
+                            <Directory Id="X64Folder" Name="x86_64-win">
+                                <Component Id="PluginComponent" Guid="*" Win64="yes">
+                                    <File Id="PluginFile"
+                                        Source="..\build\APCX_artefacts\Release\VST3\APCX.vst3\Contents\x86_64-win\APCX.vst3"
+                                        KeyPath="yes" />
+                                </Component>
+                            </Directory>
+                        </Directory>
+                    </Directory>
+                </Directory>
+            </Directory>
+        </Directory>
+    </Directory>
+
+    <!-- Components to install -->
+    <Feature Id="ProductFeature" Title="APCX" Level="1">
+        <ComponentRef Id="PluginComponent" />
+    </Feature>
+
+    <!-- UI Configuration -->
+    <UIRef Id="WixUI_InstallDir" />
+    <WixVariable Id="WixUIBannerBmp" Value="banner.bmp" />
+    <WixVariable Id="WixUIDialogBmp" Value="dialog.bmp" />
+    <WixVariable Id="WixUILicenseRtf" Value="license.rtf" />
+</Product>
+</Wix>

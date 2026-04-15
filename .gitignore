@@ -1,0 +1,66 @@
+# JUCE specific
+JUCE/
+JuceLibraryCode/
+Builds/
+*.user
+*.suo
+*.sdf
+*.opensdf
+*.opendb
+*.vcxproj.user
+*.xcworkspace
+*.xcuserdatad
+*.pdb
+*.ilk
+*.db
+*.obj
+*.log
+*.tlog
+*.lastbuildstate
+.vs/
+
+# Local build script
+build.bat
+
+# Build artifacts
+build/
+x64/
+Win32/
+Debug/
+Release/
+ipch/
+
+# Plugin specific
+*.vst3
+*.component
+*.dll
+*.so
+*.dylib
+*.exe
+*.exp
+*.lib
+
+# Generated files
+**/moduleinfo.json
+
+# OS specific
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDE specific
+.idea/
+.vscode/
+.cursorrules
+
+# Projucer backup files
+*.jucer.bak
+*.jucer.autosave
+
+# Don't ignore important files
+!.github/workflows/
+
+# Generated WiX installer files
+wix/product.wxs
+wix/*.wixobj
+wix/*.msi
