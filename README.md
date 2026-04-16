@@ -43,16 +43,16 @@ If the DAW does not list APCX, confirm the **full** `APCX.vst3` bundle was copie
 
 ## Using APCX
 
-1. Connect the **APC Mini MK2** over USB before or right after you open the plug-in.  
+1. Connect the **Akai APC Mini MK2** over USB before or right after you open the plug-in.  
 2. Insert APCX on a track or slot where your DAW allows **MIDI-generating / MIDI-effect** VST3s, and route its MIDI output to a software instrument (or the next MIDI effect in the chain), following your DAW’s usual rules for MIDI FX.  
-3. Watch the status line at the bottom: it should move from **searching** to **connected** when the APC is found.  
+3. Watch the status line at the bottom: it should move from **searching** to **connected** when the APC Mini MK2 is found.  
 4. **Top four pad rows (32 pads):** step positions in the live sequencer—tap pads to enable or edit steps.  
 5. **Bottom left 4×4:** note / pitch selection for painting steps.  
 6. **Bottom right 4×4:** velocity selection.  
 
-**Key / scale / octave** controls are under the grid. **Pad colors on the APC** show the current step, active notes, and velocity.
+**Key / scale / octave** controls are under the grid. **Pad colors on the APC Mini MK2** show the current step, active notes, and velocity.
 
-**Shift on the hardware:** hold **Shift** on the APC for the on-device scale/key/octave overlay.
+**Shift on the hardware:** hold **Shift** on the APC Mini MK2 for the on-device scale/key/octave overlay.
 
 ---
 
