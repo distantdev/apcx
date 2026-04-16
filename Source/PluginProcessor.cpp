@@ -815,6 +815,10 @@ int APCXAudioProcessor::mapToHardwareIndex(int row, int col)
 
 void APCXAudioProcessor::updateStepButtonOnHardware(int index, bool isCurrentStep)
 {
+    // While shift is held, the grid is dedicated to the shift menu overlay.
+    if (shiftPressed.load(std::memory_order_relaxed))
+        return;
+
     if (!hardwareConnected || midiOutput == nullptr || index < 0 || index >= 32)
         return;
     
@@ -876,6 +880,10 @@ void APCXAudioProcessor::updateStepButtonOnHardware(int index, bool isCurrentSte
 
 void APCXAudioProcessor::updateNoteButtonOnHardware(int index, bool isSelected)
 {
+    // While shift is held, the grid is dedicated to the shift menu overlay.
+    if (shiftPressed.load(std::memory_order_relaxed))
+        return;
+
     if (!hardwareConnected || midiOutput == nullptr || index < 0 || index >= 16)
         return;
     
@@ -927,6 +935,10 @@ void APCXAudioProcessor::updateNoteButtonOnHardware(int index, bool isSelected)
 
 void APCXAudioProcessor::updateModifierButtonOnHardware(int index, bool isSelected, int velocity)
 {
+    // While shift is held, the grid is dedicated to the shift menu overlay.
+    if (shiftPressed.load(std::memory_order_relaxed))
+        return;
+
     if (!hardwareConnected || midiOutput == nullptr || index < 0 || index >= 16)
         return;
     
