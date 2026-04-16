@@ -1,3 +1,5 @@
+# SPDX-License-Identifier: AGPL-3.0-or-later
+
 cmake_minimum_required(VERSION 3.22)
 
 # Plugin and JUCE ProjectInfo::* use this as the single version source (see juce_add_plugin VERSION default).

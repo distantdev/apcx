@@ -1,3 +1,5 @@
+<!-- SPDX-License-Identifier: AGPL-3.0-or-later -->
+
 # APCX
 
 APCX is a **VST3 MIDI effect** for the **Akai APC Mini MK2** that turns the controller into a **live step sequencer**: build patterns on the pad grid, run the sequence in time with your DAW, and drive software instruments with the plug-in’s MIDI output.
@@ -144,6 +146,8 @@ Pull requests are welcome. Use the **CMake** build, test with an **APC Mini MK2*
 
 ## License
 
-Copyright © 2023-2026 Distant Nebula. All rights reserved.
+APCX is copyright © 2023–2026 Distant Nebula and licensed under the [GNU Affero General Public License v3.0](https://www.gnu.org/licenses/agpl-3.0.html) (AGPL-3.0). See the [`LICENSE`](LICENSE) file in this repository for the full license text.
+
+This project uses [JUCE](https://juce.com/), which is used here under the same AGPLv3 option described in JUCE’s [license terms](https://github.com/juce-framework/JUCE/blob/master/LICENSE.md) (or a commercial JUCE license if you obtain one separately).
 
 Contact: Levi Sluder — [levi@distantnebula.com](mailto:levi@distantnebula.com) — [https://distantnebula.com](https://distantnebula.com)

@@ -1,3 +1,5 @@
+// SPDX-License-Identifier: AGPL-3.0-or-later
+
 #include "PluginProcessor.hpp"
 #include "PluginEditor.hpp"
 #include <pluginterfaces/base/ftypes.h>
